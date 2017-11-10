@@ -1,0 +1,160 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+<div class="body-content">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Dashboard</h1>
+    </div>
+  </div>
+
+  <!-- courses -->
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Courses
+      <a href="{{ url_for('admin.add_course') }}" class="btn btn-primary btn-xs">Add</a>
+      </h2>
+      {% if courses %}
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Subject</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Active</th>
+                <th>Taught By</th>
+                <th>Students</th>
+                <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for course in courses %}
+                  <tr>
+                    <th scope="row">{{ course.id }}</th>
+                    <td>{{ course.name }}</td>
+                    <td>{{ course.description }}</td>
+                    <td>{{ course.subject }}</td>
+                    <td>{{ course.start_date.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ course.end_date.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ course.active }}</td>
+                    <td>{{ course.teacher.email }}</td>
+                    <td>
+                      <ul>
+                        {% for student in course.students %}
+                          <li>{{ student.email }}</li>
+                        {% endfor %}
+                      </ul>
+                    </td>
+                    <td>
+                      <a href="{{ url_for('admin.update_course', course_id=course.id) }}" data-toggle="tooltip" title="Edit Course"><span class="glyphicon glyphicon-edit"></span></a>
+                      &nbsp;
+                      <a href="" data-toggle="tooltip" title="Delete Course" id="{{ course.id}}" class="delete-course"><span class="glyphicon glyphicon-remove"></span></a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+      {% else %}
+        <p>No courses!</p>
+    {% endif %}
+    </div>
+  </div>
+  <!-- /courses -->
+
+  <!-- students -->
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Students
+      <a href="{{ url_for('admin.add_student') }}" class="btn btn-primary btn-xs">Add</a>
+      {% if students %}
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+                <th>Email</th>
+                <th>Registered On</th>
+                <th>Courses</th>
+                <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for student in students %}
+                  <tr>
+                    <th scope="row">{{ student.id }}</th>
+                    <td>{{ student.email }}</td>
+                    <td>{{ student.registered_on.strftime('%Y-%m-%d') }}</td>
+                    <td>
+                      <ul>
+                        {% for course in student.courses %}
+                          <li>{{ course.name }}</li>
+                        {% endfor %}
+                      </ul>
+                    </td>
+                    <td>
+                      <a href="{{ url_for('admin.update_student', student_id=student.id) }}" data-toggle="tooltip" title="Edit Student"><span class="glyphicon glyphicon-edit"></span></a>
+                      &nbsp;
+                      <a href="" data-toggle="tooltip" title="Delete Student" id="{{ student.id}}" class="delete-student"><span class="glyphicon glyphicon-remove"></span></a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+      {% else %}
+        <p>No students!</p>
+    {% endif %}
+    </div>
+  </div>
+  <!-- /students -->
+
+  <!-- teachers -->
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Teachers
+      <a href="{{ url_for('admin.add_teacher') }}" class="btn btn-primary btn-xs">Add</a>
+      {% if teachers %}
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+                <th>Email</th>
+                <th>Registered On</th>
+                <th>Courses Taught</th>
+                <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for teacher in teachers %}
+                  <tr>
+                    <th scope="row">{{ teacher.id }}</th>
+                    <td>{{ teacher.email }}</td>
+                    <td>{{ teacher.registered_on.strftime('%Y-%m-%d') }}</td>
+                    <td>
+                      <ul>
+                        {% for course in teacher.courses %}
+                          <li>{{ course.name }}</li>
+                        {% endfor %}
+                      </ul>
+                    </td>
+                    <td>
+                      <a href="{{ url_for('admin.update_teacher', teacher_id=teacher.id) }}" data-toggle="tooltip" title="Edit Teacher"><span class="glyphicon glyphicon-edit"></span></a>
+                      &nbsp;
+                      <a href="" data-toggle="tooltip" title="Delete Teacher" id="{{ teacher.id}}" class="delete-teacher"><span class="glyphicon glyphicon-remove"></span></a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+      {% else %}
+        <p>No teachers!</p>
+    {% endif %}
+    </div>
+  </div>
+  <!-- /teachers -->
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+<div class="body-content">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>{{ single_course.name }}</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <p>{{ single_course.description }}</p>
+      <p>{{ single_course.start_date.strftime('%Y-%m-%d') }}</p>
+      <p>{{ single_course.end_date.strftime('%Y-%m-%d') }}</p>
+      <p><a class="btn btn-default btn-sm" href="{{ url_for('teacher.update_course', course_id=single_course.id) }}" role="button">Edit</a></p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

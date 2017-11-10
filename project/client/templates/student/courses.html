@@ -1,0 +1,26 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+<div class="body-content">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>All Courses</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      {% if current_user.courses %}
+        <ul>
+          {% for course in current_user.courses %}
+            <li><a href="{{ url_for('student.show_single_course', course_id=course.id) }}">{{ course.name }}</a></li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>You are not taking any courses.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}
